@@ -50,11 +50,11 @@ export class SearchComponent implements OnInit{
       }
     }
 
-    sortUsers(e?): void{
+    sortUsers(): void{
       this.users.sort(this.sort);
     }
 
-    sort(from, to){
+    sort(from: any, to: any){
       let value = 0;
       if(from.register && !to.register){
         value -= 1;

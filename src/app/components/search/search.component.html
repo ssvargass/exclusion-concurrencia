@@ -23,7 +23,7 @@
             <th scope="row">{{user.id}}</th>
             <td><input type="text" name="name-{{i}}" [(ngModel)]="user.name" [ngModelOptions]="{standalone: true}"/></td>
             <td>
-              <select [(ngModel)]="user.quality" [ngModelOptions]="{standalone: true}" (ngModelChange)="sortUsers($event)">
+              <select [(ngModel)]="user.quality" [ngModelOptions]="{standalone: true}" (ngModelChange)="sortUsers()">
                 <option *ngFor="let quality of QUALITIES" [value]="quality.value">{{quality.name}}</option>
               </select>
             </td>
