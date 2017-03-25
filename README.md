@@ -1,34 +1,37 @@
-# Angular QuickStart Source
+# Exlusión mutua - Concurrencia - Semáforo
 [![Build Status][travis-badge]][travis-badge-url]
 
-This repository holds the TypeScript source code of the [angular.io quickstart](https://angular.io/docs/ts/latest/quickstart.html),
-the foundation for most of the documentation samples and potentially a good starting point for your application.
+El objetivo de este algoritmo es ejemplificar la exclusión mutua con relacion a la concurrencias y el concepto de semáforo.
 
-It's been extended with testing support so you can start writing tests immediately.
+## Base conceptual
 
-**This is not the perfect arrangement for your application. It is not designed for production.
-It exists primarily to get you started quickly with learning and prototyping in Angular**
+Para comprender el funcionamiento y comportamiento de la aplicación es necesario repasar los conceptos a demostrar.
 
-We are unlikely to accept suggestions about how to grow this QuickStart into something it is not.
-Please keep that in mind before posting issues and PRs.
+## Exclusión mutua
 
-## Updating to a newer version of the Quickstart Repo
+La exclusión mutua hace presencia en el momento en que se obtiene un solo recurso con multiples peticiones, para ejecutar la tarea de forma adecuada se debe atender las peticiones de acuerdo a un orden de prioridad, algunas veces se atienden como una cola, pero en el caso de existir una variable que exprese mayor relevancia, esta debe atender primero la de más alta prioridad.
 
-From time to time the QuickStart will add be enhanced with support for new features or to reflect
-changes to the [official Style Guide](https://angular.io/docs/ts/latest/guide/style-guide.html).
+## Concurrencia
 
-You can update your existing project to an up-to-date QuickStart by following these instructions:
-- Create a new project using the [instructions below](#create-a-new-project-based-on-the-quickstart)
-- Copy the code you have in your project's `main.ts` file onto `src/app/main.ts` in the new project
-- Copy your old `app` folder into `src/app`
-- Delete `src/app/main.ts` if you have one (we now use `src/main.ts` instead)
-- Copy your old `index.html`, `styles.css` and `tsconfig.json` into `src/`
-- Install all your third party dependencies
-- Copy your old `e2e/` folder into `e2e/`
-- Copy over any other files you added to your project
-- Copy your old `.git` folder into your new project's root
+Hace alusion a un número de conexiones simultaneas al mismo servidor, para contrarestar el alto volumen de información se deben tener varias fuentes de información.
 
-Now you can continue working on the new project.
+## Explicación del sistema
+
+Con la intención de generar una ejemplificación didáctica, se genero una aplicación web en la que se tienen 10 usuarios, es posible modificar sus carácterísticas base que son: Nombre, Calidad de canción requerida, estado de registro y palabras a buscar.
+
+Se genera un nivel de relevancia de petición dependiente al estado del registro y calidad solicitada, dejando de primero usuarios registrados con solicitud de alta calidad.
+
+Los usuarios son obtenidos de forma local en un Json estático.
+
+Las peticiones al API de Spotify se realizan de acuerdo a la prioridad asignada y se hace uso de peticiones con protocolo http para obtener el resultado para cada palabra indicada por usuario.
+
+## Diagrama MVCS
+
+![img](https://lh3.googleusercontent.com/Wwi2tbnSItUklKZn4sHJlNjuPxDvxuTbZlv6hxak54G1p7bVoLy1XI8N9-iS08W1zpCp8TKrHStNAYnIsZgYEa9rXxXv5fWIyql0Y5uy674hAsFFnoG3MJbMFRLRwrvUH1vf0qjWJbAJb4F-RMMZKWn4x4tXuTcZGUGCzkKrs73XQ_DH0jQcgqQcbR7kPvbEJwlTdCygcEtT5yvDnAy4k7fCf5Fo1aWO5RMHXSJQW558MXUmbj5A1EbsjMQMwbC55rYi1gR4GklMYHd8vwt8iRZadBzvg3qlGw9REhe4_Icdl_S_Q2WKx7I67qFAifoPX_0ocw2PdamY_ZCQk8WbS-7-1pWapDKcISgO0pNJJw33V07cDl-sTTBhRL9mhnhDEQ3x_J3_8w6oE2qUWsZr61BIQxX4K4oYvsphRSZKiL71JP_-oO2eyOxkFKIVoJp_DM7-Uli3BdBkWjdKcQHWdz_NbQPiE5HE7De4kS-4ye9IJPfnKJxlIemCNXqnGcPl1cESErbXsppYuDz1S9x2Vv8LC89jykHFjT9ckzxlDvZVBbkNDX0GWwHJCG9uwocLSn7Xar1U3n7jGcvbsQpSphuObHIaqSxXpVj1qDCEIJidaMWaW0yp=w1053-h726-no)
+
+## Instalación
+
+Siga los pasos para realizar la instalación en cualquier sistema operativo.
 
 ## Prerequisites
 
@@ -43,61 +46,14 @@ Older versions produce errors.
 
 We recommend [nvm](https://github.com/creationix/nvm) for managing multiple versions of node and npm.
 
-## Create a new project based on the QuickStart
+## Download the project
 
 Clone this repo into new project folder (e.g., `my-proj`).
 ```shell
-git clone https://github.com/angular/quickstart  my-proj
+git clone https://github.com/ssvargass/exclusion-concurrencia  my-proj
 cd my-proj
 ```
 
-We have no intention of updating the source on `angular/quickstart`.
-Discard the `.git` folder..
-```shell
-rm -rf .git  # OS/X (bash)
-rd .git /S/Q # windows
-```
-### Delete _non-essential_ files (optional)
-
-You can quickly delete the _non-essential_ files that concern testing and QuickStart repository maintenance
-(***including all git-related artifacts*** such as the `.git` folder and `.gitignore`!)
-by entering the following commands while in the project folder:
-
-##### OS/X (bash)
-```shell
-xargs rm -rf < non-essential-files.osx.txt
-rm src/app/*.spec*.ts
-rm non-essential-files.osx.txt
-```
-
-##### Windows
-```shell
-for /f %i in (non-essential-files.txt) do del %i /F /S /Q
-rd .git /s /q
-rd e2e /s /q
-```
-
-### Create a new git repo
-You could [start writing code](#start-development) now and throw it all away when you're done.
-If you'd rather preserve your work under source control, consider taking the following steps.
-
-Initialize this project as a *local git repo* and make the first commit:
-```shell
-git init
-git add .
-git commit -m "Initial commit"
-```
-
->Recover the deleted `.gitignore` from the QuickStart repository 
-if you lost it in the _Delete non-essential files_ step.
-
-Create a *remote repository* for this project on the service of your choice.
-
-Grab its address (e.g. *`https://github.com/<my-org>/my-proj.git`*) and push the *local repo* to the *remote*.
-```shell
-git remote add origin <repo-address>
-git push -u origin master
-```
 ## Install npm packages
 
 > See npm and nvm version notes above
